@@ -1,10 +1,9 @@
 import os, time, schedule, random, requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from enum import Enum
 from win10toast import ToastNotifier
 
-class Essenstials():
+class Essenstials:
     TASKS = [
         "Do 10 Pushups",
         "Take a walk",
@@ -50,12 +49,12 @@ class DryEye:
         os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
 
     def start(self) -> None:
-        self.assign_adhan_times_variables()
-
-        schedule.every(50).minutes.do(self.notification, random.choice(Essenstials.TASKS))
-        # schedule.every(55).minutes.do(self.sleeping)
+        schedule.every(50).minutes.do(self.notification, content=random.choice(Essenstials.TASKS))
+        schedule.every(55).minutes.do(self.sleeping)
 
         while True:
+            self.assign_adhan_times_variables()
+
             match self.current_time:
                 case self.fajr:
                     self.notification("It's time for Fajr prayer", "Prayer Notification")
